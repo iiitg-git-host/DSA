@@ -4,17 +4,21 @@
 
 struct node{
 	int num;	
-	char name;
+	char name[100];
 	struct node* next;
 };
 
-void enqueue(struct node ** queue,char name){
+void enqueue(struct node ** queue,char n[]){
 	struct node *t =(struct node*)malloc(sizeof(struct node));
 	if(*queue==NULL){t->num =1;}else{t->num = ((*queue)->num)+1;}	
-	t->name = name;
+	int i;
+	for(i=0;n[i]!='\0';i++){
+		t->name[i]=n[i];
+	}
+	t->name[i]='\0';
 	t->next = *queue;
 	*queue = t;
-	printf("%c has been given order number %d\n",t->name,t->num);	
+	printf("%s has been given order number %d\n",t->name,t->num);	
 }
 
 void dequeue(struct node ** queue, int num){
@@ -23,14 +27,14 @@ void dequeue(struct node ** queue, int num){
 		if(trav==NULL){printf("No such customer");break;}
 		trav = trav->next;
 	}
-	printf("%c has recieved their order\n",trav->next->name);
+	printf("%s has recieved their order\n",trav->next->name);
 	trav->next =trav->next->next;
 }
 
 void display(struct node ** queue){
 	struct node* trav = *queue;
 	while(trav!=NULL){
-		printf(" %c(%d) ",trav->name,trav->num);
+		printf(" %s(%d) ",trav->name,trav->num);
 		trav = trav->next;
 	}
 	printf("\n");
@@ -46,9 +50,9 @@ int main(){
 	scanf("%d",&ch);
 	getchar();
 	if(ch==1){
-		char n;
+		char n[100];
 		printf("Enter name of the customer:\n");
-		scanf("%c",&n);
+		scanf("%[^\n]%*c",n);
 		enqueue(&queue,n);		
 	}
 	else if(ch==2){
