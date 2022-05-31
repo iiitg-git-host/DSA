@@ -86,6 +86,14 @@ void reduceQueue(int queue[],int *front,int *rear,int *size){
             *size=*size-5;
         }
         else if(*front<*rear){
+            int offset = *front;
+            while(*front!=*rear){
+                queue[*front-offset]=queue[*front];
+                (*front)++;             
+            }
+            queue[*front-offset]=queue[*front];
+            *front = 0;
+            *rear = *rear-offset;
             *size = *size-5;
         }
         else{printf("Cannot reduce size. Space in Use!\n");}
@@ -94,7 +102,7 @@ void reduceQueue(int queue[],int *front,int *rear,int *size){
     
 }
 int printElements(int queue[], int* front, int * rear,int size){
-	
+	if(isEmpty(front,rear)){printf("queue is empty!\n");}else{
 	int i =*front;
 	if(*rear>=*front){
 		while(i<*rear){
@@ -114,7 +122,7 @@ int printElements(int queue[], int* front, int * rear,int size){
 			i++;
 		}
 	}
-	printf("\n");	
+	printf("\n");	}
 }
 void display(int queue[],int size){
     for (int i =0;i<size;i++){
@@ -140,7 +148,7 @@ int main(){
             scanf("%d",&data);
             insertFront(bigArray,&fArray,&rArray,size,data);
             printf("front is %d and rear is %d\n",fArray,rArray);
-            display(bigArray,size);
+            //display(bigArray,size);
         }
         else if(ch==2){
             printf("Enter Data:\n");
@@ -148,29 +156,34 @@ int main(){
             scanf("%d",&data);
             insertRear(bigArray,&fArray,&rArray,size,data);
             printf("front is %d and rear is %d\n",fArray,rArray);
-            display(bigArray,size);
+            //display(bigArray,size);
         }
         else if(ch==3){
             int x = deleteFront(bigArray,&fArray,&rArray,size);
-            if(x!=-1){printf("Dequeued: %d\n",x);display(bigArray,size);}
+            if(x!=-1){
+                printf("Dequeued: %d\n",x);
+                // display(bigArray,size);
+            }
             
         }
         else if(ch==4){
             int x = deleteRear(bigArray,&fArray,&rArray,size);
-            if(x!=-1){printf("Dequeued: %d\n",x);display(bigArray,size);}
+            if(x!=-1){printf("Dequeued: %d\n",x);
+            // display(bigArray,size);
+            }
         }
         else if(ch==5){
             size = size+5;
             stretchQueue(bigArray,&fArray,&rArray,size);
-            display(bigArray,size);
+            // display(bigArray,size);
         }
         else if(ch==6){
             reduceQueue(bigArray,&fArray,&rArray,&size);
-            display(bigArray,size);
+            // display(bigArray,size);
         }
         else if(ch==7){
             printElements(bigArray,&fArray,&rArray,size);
-            display(bigArray,size);
+            // display(bigArray,size);
         }
         else if(ch==8){
             exit(0);
